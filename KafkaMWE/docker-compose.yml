@@ -6,7 +6,7 @@ services:
       - 8080:8080
     depends_on:
       - kafka
-      - schema-registry
+      # - schema-registry
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
