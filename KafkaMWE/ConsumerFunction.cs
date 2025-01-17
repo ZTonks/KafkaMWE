@@ -35,8 +35,11 @@ public class ConsumerFunction(
 
             if (kafkaData.Value is not null)
             {
+                var valueBytes = Encoding.UTF8.GetBytes(kafkaData.Value);
+
+                // Fails deserializing the date from Avro.
                 var foo = kafkaAvroDeserializer.Deserialize(
-                    Encoding.UTF8.GetBytes(kafkaData.Value),
+                    valueBytes,
                     isNull: false,
                     context);
 
@@ -77,12 +80,15 @@ public class ConsumerFunction(
     //            topic: default,
     //            headers: [.. kafkaHeaders]);
 
+    //        // Works
     //        var foo = kafkaAvroDeserializer.Deserialize(
     //            @event,
     //            isNull: false,
     //            context);
 
-    //        logger.LogInformation(foo.ToString());
+    //        var json = JsonSerializer.Serialize(foo);
+
+    //        logger.LogInformation(json.ToString());
     //    }
     //}
 
@@ -100,7 +106,7 @@ public class ConsumerFunction(
     //    var context = new SerializationContext(
     //        component: MessageComponentType.Value,
     //        topic: default,
-    //        headers: [ .. headers.Select(header => new Header(header.Key, Convert.FromBase64String(header.Value)))]);
+    //        headers: [.. headers.Select(header => new Header(header.Key, Convert.FromBase64String(header.Value)))]);
 
     //    var foo = kafkaAvroDeserializer.Deserialize(
     //        @event,
@@ -109,7 +115,9 @@ public class ConsumerFunction(
 
     //    if (foo is not null)
     //    {
-    //        logger.LogInformation(foo.ToString());
+    //        var json = JsonSerializer.Serialize(foo);
+
+    //        logger.LogInformation(json.ToString());
     //    }
     //    else
     //    {

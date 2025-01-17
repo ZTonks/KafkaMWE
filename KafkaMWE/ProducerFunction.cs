@@ -14,62 +14,18 @@ public class ProducerFunction(
             "0 */1 * * * *",
             RunOnStartup = true)] TimerInfo myTimer)
     {
-        //var produce = producer.ProduceAsync(
-        //    "Foos",
-        //    new Message<string, Bar>
-        //    {
-        //        Key = "Yes",
-        //        Value = new Bar
-        //        {
-        //            Id = "yes",
-        //            Bar1 = "yes",
-        //            Bar5 =
-        //            [
-        //                new Bar5
-        //                {
-        //                    Id = "yes",
-        //                    Bar7 = "yes",
-        //                    Bar8 = "yes",
-        //                    Bar13 = new Avro.AvroDecimal(new BigInteger(0), 2),
-        //                    Bar15  = new(),
-        //                },
-        //            ]
-        //        },
-        //    });
-
-        //var produce = producer.ProduceAsync(
-        //    "Foos",
-        //    new Message<string, Bar5>
-        //    {
-        //        Key = "Yes",
-        //        Value = new Bar5
-        //        {
-        //            Id = "yes",
-        //            Bar7 = "yes",
-        //            Bar8 = "yes",
-        //            Bar13 = new Avro.AvroDecimal(new BigInteger(0), 2),
-        //            Bar15  = new(),
-        //        },
-        //    });
-
         var produce = producer.ProduceAsync(
             "Foos",
             new Message<string, Bar15>
             {
-                Key = "Yes",
-                Value = new Bar15(),
+                Key = "Key",
+                Value = new Bar15
+                {
+                    Bar16 = 40,
+                    Bar17 = 4,
+                    Bar23 = new DateTime(1995, 5, 17),
+                },
             });
-
-        //var produce = producer.ProduceAsync(
-        //    "Foos",
-        //    new Message<string, Foo>
-        //    {
-        //        Key = "Yes",
-        //        Value = new Foo()
-        //        {
-        //            Bar = "behf",
-        //        },
-        //    });
 
         var tasks = Enumerable
             .Range(0, 0)
@@ -83,7 +39,7 @@ public class ProducerFunction(
             "Foos",
             new Message<string, Bar15>
             {
-                Key = "Yes",
+                Key = "Key",
                 Value = null!,
             });
 }
