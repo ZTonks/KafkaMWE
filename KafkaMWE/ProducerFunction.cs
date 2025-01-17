@@ -6,7 +6,7 @@ using Test;
 namespace KafkaMWE;
 
 public class ProducerFunction(
-    IProducer<string, Foo> producer)
+    IProducer<string, Bar15> producer)
 {
     [Function(nameof(Produce))]
     public Task Produce(
@@ -52,24 +52,24 @@ public class ProducerFunction(
         //        },
         //    });
 
-        //var produce = producer.ProduceAsync(
-        //    "Foos",
-        //    new Message<string, Bar15>
-        //    {
-        //        Key = "Yes",
-        //        Value = new Bar15(),
-        //    });
-
         var produce = producer.ProduceAsync(
             "Foos",
-            new Message<string, Foo>
+            new Message<string, Bar15>
             {
                 Key = "Yes",
-                Value = new Foo()
-                {
-                    Bar = "behf",
-                },
+                Value = new Bar15(),
             });
+
+        //var produce = producer.ProduceAsync(
+        //    "Foos",
+        //    new Message<string, Foo>
+        //    {
+        //        Key = "Yes",
+        //        Value = new Foo()
+        //        {
+        //            Bar = "behf",
+        //        },
+        //    });
 
         var tasks = Enumerable
             .Range(0, 0)
@@ -78,10 +78,10 @@ public class ProducerFunction(
         return Task.WhenAll([produce, .. tasks]);
     }
 
-    private Task<DeliveryResult<string, Foo>> ProduceTombstone() =>
+    private Task<DeliveryResult<string, Bar15>> ProduceTombstone() =>
         producer.ProduceAsync(
             "Foos",
-            new Message<string, Foo>
+            new Message<string, Bar15>
             {
                 Key = "Yes",
                 Value = null!,

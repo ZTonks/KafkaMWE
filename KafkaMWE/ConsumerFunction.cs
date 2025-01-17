@@ -10,7 +10,7 @@ namespace KafkaMWE;
 
 public class ConsumerFunction(
     ILogger<ConsumerFunction> logger,
-    KafkaAvroDeserializer<Foo> kafkaAvroDeserializer)
+    KafkaAvroDeserializer<Bar15> kafkaAvroDeserializer)
 {
     [Function(nameof(ConsumerBatchedStrings))]
     public void ConsumerBatchedStrings(

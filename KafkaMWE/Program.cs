@@ -36,9 +36,9 @@ builder.Services
         var schemaRegistryUrl = configuration.GetValue<string>("SchemaRegistryUrl");
         var schemaGroup = configuration.GetValue<string>("SchemaGroup");
 
-        return new DependentProducerBuilder<string, Foo>(baseProducer.Handle)
+        return new DependentProducerBuilder<string, Bar15>(baseProducer.Handle)
             .SetValueSerializer(
-                new KafkaAvroAsyncSerializer<Foo>(
+                new KafkaAvroAsyncSerializer<Bar15>(
                     schemaRegistryUrl,
                     new DefaultAzureCredential(new DefaultAzureCredentialOptions
                     {
@@ -55,7 +55,7 @@ builder.Services
 
         var schemaRegistryUrl = configuration.GetValue<string>("SchemaRegistryUrl");
 
-        return new KafkaAvroDeserializer<Foo>(
+        return new KafkaAvroDeserializer<Bar15>(
             schemaRegistryUrl,
             new DefaultAzureCredential(new DefaultAzureCredentialOptions
             {
