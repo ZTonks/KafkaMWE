@@ -1,0 +1,61 @@
+{
+    "type": "record",
+    "name": "Bar15",
+    "namespace": "Test",
+    "fields": [
+        {
+            "name": "Bar16",
+            "type": "long"
+        },
+        {
+            "name": "Bar17",
+            "type": [
+                "null",
+                "int"
+            ]
+        },
+        {
+            "name": "Bar18",
+            "type": [
+                "null",
+                "int"
+            ]
+        },
+        {
+            "name": "Bar19",
+            "type": [
+                "null",
+                "int"
+            ]
+        },
+        {
+            "name": "Bar20",
+            "type": [
+                "null",
+                "int"
+            ]
+        },
+        {
+            "name": "Bar21",
+            "type": "int"
+        },
+        {
+            "name": "Bar22",
+            "type": "int"
+        },
+        {
+            "name": "Bar23",
+            "type": {
+                "type": "int",
+                "logicalType": "date"
+            }
+        },
+        {
+            "name": "Bar24",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid"
+            }
+        }
+    ]
+}
