@@ -54,74 +54,74 @@ public class ConsumerFunction(
         }
     }
 
-    //[Function(nameof(ConsumerBatchedBytes))]
-    //public void ConsumerBatchedBytes(
-    //    [KafkaTrigger(
-    //        brokerList: "BootstrapServers",
-    //        topic: "Foos",
-    //        ConsumerGroup = "$Default2",
-    //        IsBatched = true)] byte[][] events,
-    //    FunctionContext functionContext)
-    //{
-    //    var i = 0;
-    //    var headersArray = functionContext.BindingContext.BindingData["HeadersArray"];
-    //    var headers = JsonSerializer.Deserialize<IEnumerable<IEnumerable<KeyValuePair<string, string>>>>(
-    //        headersArray!.ToString()!)!;
+    [Function(nameof(ConsumerBatchedBytes))]
+    public void ConsumerBatchedBytes(
+        [KafkaTrigger(
+            brokerList: "BootstrapServers",
+            topic: "Foos",
+            ConsumerGroup = "$Default2",
+            IsBatched = true)] byte[][] events,
+        FunctionContext functionContext)
+    {
+        var i = 0;
+        var headersArray = functionContext.BindingContext.BindingData["HeadersArray"];
+        var headers = JsonSerializer.Deserialize<IEnumerable<IEnumerable<KeyValuePair<string, string>>>>(
+            headersArray!.ToString()!)!;
 
-    //    foreach (var @event in events)
-    //    {
-    //        var headersThisEvent = headers.Skip(i++).First();
+        foreach (var @event in events)
+        {
+            var headersThisEvent = headers.Skip(i++).First();
 
-    //        var kafkaHeaders = headersThisEvent
-    //            .Select(kh => new Header(kh.Key, Convert.FromBase64String(kh.Value)));
+            var kafkaHeaders = headersThisEvent
+                .Select(kh => new Header(kh.Key, Convert.FromBase64String(kh.Value)));
 
-    //        var context = new SerializationContext(
-    //            component: MessageComponentType.Value,
-    //            topic: default,
-    //            headers: [.. kafkaHeaders]);
+            var context = new SerializationContext(
+                component: MessageComponentType.Value,
+                topic: default,
+                headers: [.. kafkaHeaders]);
 
-    //        // Works
-    //        var foo = kafkaAvroDeserializer.Deserialize(
-    //            @event,
-    //            isNull: false,
-    //            context);
+            // Works
+            var foo = kafkaAvroDeserializer.Deserialize(
+                @event,
+                isNull: false,
+                context);
 
-    //        var json = JsonSerializer.Serialize(foo);
+            var json = JsonSerializer.Serialize(foo);
 
-    //        logger.LogInformation(json.ToString());
-    //    }
-    //}
+            logger.LogInformation(json.ToString());
+        }
+    }
 
 
-    //[Function(nameof(ConsumerSingle))]
-    //public void ConsumerSingle(
-    //    [KafkaTrigger(
-    //        brokerList: "BootstrapServers",
-    //        topic: "Foos",
-    //        ConsumerGroup = "$Default3",
-    //        IsBatched = false)] byte[] @event,
-    //    IEnumerable<KeyValuePair<string, string>> headers,
-    //    FunctionContext functionContext)
-    //{
-    //    var context = new SerializationContext(
-    //        component: MessageComponentType.Value,
-    //        topic: default,
-    //        headers: [.. headers.Select(header => new Header(header.Key, Convert.FromBase64String(header.Value)))]);
+    [Function(nameof(ConsumerSingle))]
+    public void ConsumerSingle(
+        [KafkaTrigger(
+            brokerList: "BootstrapServers",
+            topic: "Foos",
+            ConsumerGroup = "$Default3",
+            IsBatched = false)] byte[] @event,
+        IEnumerable<KeyValuePair<string, string>> headers,
+        FunctionContext functionContext)
+    {
+        var context = new SerializationContext(
+            component: MessageComponentType.Value,
+            topic: default,
+            headers: [.. headers.Select(header => new Header(header.Key, Convert.FromBase64String(header.Value)))]);
 
-    //    var foo = kafkaAvroDeserializer.Deserialize(
-    //        @event,
-    //        isNull: false,
-    //        context);
+        var foo = kafkaAvroDeserializer.Deserialize(
+            @event,
+            isNull: false,
+            context);
 
-    //    if (foo is not null)
-    //    {
-    //        var json = JsonSerializer.Serialize(foo);
+        if (foo is not null)
+        {
+            var json = JsonSerializer.Serialize(foo);
 
-    //        logger.LogInformation(json.ToString());
-    //    }
-    //    else
-    //    {
-    //        logger.LogInformation("tombstone event");
-    //    }
-    //}
+            logger.LogInformation(json.ToString());
+        }
+        else
+        {
+            logger.LogInformation("tombstone event");
+        }
+    }
 }
